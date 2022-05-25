@@ -1,3 +1,8 @@
+# Birthday-Reminder
++ It allows you to keep tabs on upcoming birthdays of your love ones.
++ You key in his/her name and the date of the birthday. You are able to add some short note of what to do on that day.
++ Link to [Birthday Reminder](https://brithd-reminder.netlify.app)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
