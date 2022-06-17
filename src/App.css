@@ -4,7 +4,7 @@ body {
 
 p,
 label,
-h1 {
+h1,h4 {
   color: white;
 }
 
@@ -32,6 +32,7 @@ input[type="date"]{
   border-radius: 7px;
 }
 
+
 textarea:focus {
   border-color: #12223a;
   color: white;
@@ -40,8 +41,20 @@ textarea:focus {
 .card {
   background-color: transparent;
   border-color: #12223a;
+  width: 50%;
 }
 
+span{
+  color:green;
+}
+
+img{
+  width: 20%;
+}
+
+#img2{
+  width: 5%;
+}
 /* border{
   #12223a
 }

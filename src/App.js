@@ -1,6 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import Modal from "./modal";
+import img1 from "../src/imgs/img1.png"
+import img2 from "../src/imgs/img2.png"
+
+// GETTING SAVED BIRTHDAYS FROM SESSION STORAGE
+const getsessionStorage = () => {
+  let savedBirthdays = sessionStorage.getItem("Birthday");
+  if (savedBirthdays) {
+    return JSON.parse(sessionStorage.getItem("Birthday"));
+  } else {
+    return [];
+  }
+};
 
 const App = () => {
   // STATE FOR HANDLING INPUTS
@@ -11,8 +24,15 @@ const App = () => {
     date: "",
   });
 
-// STATE FOR HANDLING DATA FROM INPUTS
-  const [people, setPeople] = useState([]);
+  //STATE FOR MODAL
+  const [isModalOpen, setIsModalOpen] = useState({
+    state: false,
+    modalContent: "",
+    alert:""
+  });
+
+  // STATE FOR HANDLING DATA FROM INPUTS
+  const [people, setPeople] = useState(getsessionStorage());
 
   // HANDLING ONCHANGE EVENT
   const handleChange = (e) => {
@@ -28,6 +48,13 @@ const App = () => {
       const newPerson = { ...person, id: new Date().getTime().toString() };
       setPeople([...people, newPerson]);
       setPerson({ firstName: "", lastName: "", message: "", date: "" });
+      setIsModalOpen({
+        state: true,
+        modalContent: "Birthday Added Successfully!",
+        alert:"success"
+      });
+    } else {
+      setIsModalOpen({ state: true, modalContent: "Please add birthday!", alert:"danger"});
     }
   };
 
@@ -37,10 +64,25 @@ const App = () => {
     setPeople(newData);
   };
 
+  //CLOSING MODAL 
+  const CloseModal = () =>{
+    return setIsModalOpen({state:false, modalContent:""})
+  }
+
+
+  // INITIAING SESSION STORAGE
+  useEffect(() => {
+    sessionStorage.setItem("Birthday", JSON.stringify(people));
+  }, [people]);
+
   return (
     <>
-      <h1 className="text-center my-5">Birthday Reminder</h1>
-      <div className="card container my-5">
+    <div className="text-center mt-5">
+     <img src={img1} alt="happy birthday image" />
+    </div>
+      <h4 className="text-center">BIRTHDAY REMINDER</h4>
+      {isModalOpen.state && <Modal people={people} modalContent={isModalOpen.modalContent} CloseModal={CloseModal} alert={isModalOpen.alert}/>}
+      <div className="card container my-3">
         <div className="card-body p-5">
           <form action="" className="container">
             <div className="row">
@@ -123,9 +165,9 @@ const App = () => {
         </div>
       </div>
 
-      <h1 id="bdays" className="text-center">
-        Upcoming Birthdays
-      </h1>
+      <h4 className="text-center mb-5">
+       <img id="img2" src={img2} alt="cake image" /> You have <span>{people.length}</span> upcoming Birthday(s) <img id="img2" src={img2} alt="cake image" />
+      </h4>
 
       {people.map((data) => {
         const { id, firstName, lastName, message, date } = data;
