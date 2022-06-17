@@ -62,12 +62,11 @@ const App = () => {
   const removeData = (id) => {
     const newData = people.filter((data) => data.id !== id);
     setPeople(newData);
+    setIsModalOpen({state:true, modalContent:"Event marked as done", alert:"success"})
   };
 
   //CLOSING MODAL 
-  const CloseModal = () =>{
-    return setIsModalOpen({state:false, modalContent:""})
-  }
+  const CloseModal = () => setIsModalOpen({...isModalOpen, state:false})
 
 
   // INITIAING SESSION STORAGE
@@ -78,12 +77,12 @@ const App = () => {
   return (
     <>
     <div className="text-center mt-5">
-     <img src={img1} alt="happy birthday image" />
+     <img src={img1} alt="happy birthday" />
     </div>
       <h4 className="text-center">BIRTHDAY REMINDER</h4>
       {isModalOpen.state && <Modal people={people} modalContent={isModalOpen.modalContent} CloseModal={CloseModal} alert={isModalOpen.alert}/>}
       <div className="card container my-3">
-        <div className="card-body p-5">
+        <div className="card-body py-5 px-3">
           <form action="" className="container">
             <div className="row">
               <div className="col-md-6">
@@ -166,7 +165,7 @@ const App = () => {
       </div>
 
       <h4 className="text-center mb-5">
-       <img id="img2" src={img2} alt="cake image" /> You have <span>{people.length}</span> upcoming Birthday(s) <img id="img2" src={img2} alt="cake image" />
+       <img id="img2" src={img2} alt="cake" /> You have <span>{people.length}</span> upcoming Birthday(s) <img id="img2" src={img2} alt="cake" />
       </h4>
 
       {people.map((data) => {
